@@ -1,6 +1,7 @@
+import { Request, Response } from "express";
 
-type ExpressFunc = (req: Request, res: Response) => void;
-
+export type ExpressFunc = (req: Request, res: Response) => void;
+export type ControllerFunc = (httpReq: HTTPRequest) => HTTPResponse;
 interface ExpressCallback {
     handleRequest(): ExpressFunc;
 }
@@ -22,18 +23,38 @@ export interface HTTPResponse {
 }
 
 class ExpressCallbackImpl implements ExpressCallback {
-    controller: any;
-    constructor(controller: any) {
-    this.controller = controller;    
+    controller: ControllerFunc;
+    constructor(controller: ControllerFunc) {
+        this.controller = controller;
     }
     handleRequest(): ExpressFunc {
         return (req: Request, res: Response) => {
-            // const httpRequest
+            const httpReq: HTTPRequest = {
+                body: req.body,
+                query: req.params,
+                ip: req.ip,
+                method: req.method,
+                path: req.path,
+                headers: {
+                    'Content-Type': req.get('Content-Type'),
+                    Referer: req.get('referer'),
+                    'User-Agent': req.get('User-Agent'),
+                },
+                params: req.params
+            }
+            try {
+                const response: HTTPResponse = this.controller(httpReq);
+                res.set(response.headers);
+                res.type('json');
+                res.status(response.statusCode).send(response.body);
+            } catch (error) {
+                res.status(500).send({ error: "Server internal sedang error bang" })
+            }
         };
     }
-    
+
 }
 
-export default function makeExpressCallback(controller: any): ExpressCallback {
+export default function makeExpressCallback(controller: ControllerFunc): ExpressCallback {
     return new ExpressCallbackImpl(controller);
 }
