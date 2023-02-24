@@ -37,5 +37,5 @@ function makeDb(path: string): DB {
     return new DBImpl(path);
 }
 
-const productDB: DB = makeDb('products.json');
+const productDB: DB = makeDb('product.json');
 export default productDB;

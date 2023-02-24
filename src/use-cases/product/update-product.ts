@@ -8,7 +8,7 @@ export interface UpdateProductsUseCase{
 class UpdateProductsUseCaseImpl implements UpdateProductsUseCase {
     productDb: ProductDataAccess;
     constructor(db: ProductDataAccess) {
-        
+        this.productDb = db
     }
     runUseCase(newProd: Product, slug: string): Product { // params jika butuh
         return this.productDb.updateOneBySlug(newProd, slug);

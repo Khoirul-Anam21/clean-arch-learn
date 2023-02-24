@@ -1,25 +1,12 @@
-import { Product } from "../entities/product";
-import { ControllerFunc, HTTPRequest, HTTPResponse } from "../express-callback";
-import { AddProductUseCase } from "../use-cases/product/add-product";
-import { DeleteProductUseCase } from "../use-cases/product/delete-product";
-import { GetProductsUseCase } from "../use-cases/product/get-products";
-import { UpdateProductsUseCase } from "../use-cases/product/update-product";
-
-interface ProductController {
-    makePostProduct(useCase: AddProductUseCase): ControllerFunc;
-    makeGetProducts(useCase: GetProductsUseCase): ControllerFunc;
-    makeUpdateProduct(useCase: UpdateProductsUseCase): ControllerFunc;
-    makeDeleteProduct(useCase: DeleteProductUseCase): ControllerFunc;
-}
-
-class ProductControllerImpl implements ProductController {
-    makePostProduct(useCase: AddProductUseCase): ControllerFunc {
-        return function (httpReq: HTTPRequest): HTTPResponse {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class ProductControllerImpl {
+    makePostProduct(useCase) {
+        return function (httpReq) {
             try {
-                const request = httpReq.body; //normal
-                const product = JSON.parse(request);
-                console.log(product);
-                const postProduct = useCase.runUseCase(product);
+                const request = httpReq.body;
+                const productReq = JSON.parse(request);
+                const postProduct = useCase.runUseCase(productReq);
                 return {
                     headers: {
                         'Content-Type': 'application/json',
@@ -27,10 +14,9 @@ class ProductControllerImpl implements ProductController {
                     },
                     statusCode: 201,
                     body: { postProduct }
-                }
-            } catch (error: any) {
-                console.log(error);
-                
+                };
+            }
+            catch (error) {
                 return {
                     headers: {
                         'Content-Type': 'application/json'
@@ -39,13 +25,12 @@ class ProductControllerImpl implements ProductController {
                     body: {
                         error: error.message
                     }
-                }
+                };
             }
-        }
-
+        };
     }
-    makeGetProducts(useCase: GetProductsUseCase): ControllerFunc {
-        return function (_httpReq: HTTPRequest): HTTPResponse {
+    makeGetProducts(useCase) {
+        return function (_httpReq) {
             try {
                 const getProducts = useCase.runUseCase();
                 return {
@@ -54,8 +39,9 @@ class ProductControllerImpl implements ProductController {
                     },
                     statusCode: 200,
                     body: getProducts
-                }
-            } catch (error: any) {
+                };
+            }
+            catch (error) {
                 return {
                     headers: {
                         'Content-Type': 'application/json'
@@ -64,16 +50,15 @@ class ProductControllerImpl implements ProductController {
                     body: {
                         error: error.message
                     }
-                }
+                };
             }
-        }
-
+        };
     }
-    makeUpdateProduct(useCase: UpdateProductsUseCase): ControllerFunc {
-        return function (httpReq: HTTPRequest): HTTPResponse {
+    makeUpdateProduct(useCase) {
+        return function (httpReq) {
             try {
                 const request = httpReq.body;
-                const slug = httpReq.params.slug
+                const slug = httpReq.params.slug;
                 const productReq = JSON.parse(request);
                 const updatedProduct = useCase.runUseCase(productReq, slug);
                 return {
@@ -83,8 +68,9 @@ class ProductControllerImpl implements ProductController {
                     },
                     statusCode: 200,
                     body: { updatedProduct }
-                }
-            } catch (error: any) {
+                };
+            }
+            catch (error) {
                 return {
                     headers: {
                         'Content-Type': 'application/json'
@@ -93,15 +79,14 @@ class ProductControllerImpl implements ProductController {
                     body: {
                         error: error.message
                     }
-                }
+                };
             }
-        }
-
+        };
     }
-    makeDeleteProduct(useCase: DeleteProductUseCase): ControllerFunc { //done
-        return function (httpReq: HTTPRequest): HTTPResponse {
+    makeDeleteProduct(useCase) {
+        return function (httpReq) {
             try {
-                const slug: string = httpReq.params.slug;
+                const slug = httpReq.params;
                 const deletedProduct = useCase.runUseCase(slug);
                 return {
                     headers: {
@@ -111,8 +96,9 @@ class ProductControllerImpl implements ProductController {
                     body: {
                         "deletedProduct": deletedProduct
                     }
-                }
-            } catch (error: any) {
+                };
+            }
+            catch (error) {
                 return {
                     headers: {
                         'Content-Type': 'application/json'
@@ -121,15 +107,12 @@ class ProductControllerImpl implements ProductController {
                     body: {
                         error: error.message
                     }
-                }
+                };
             }
-
-        }
-
+        };
     }
-
 }
-
-export default function makeProductController(): ProductController {
+function makeProductController() {
     return new ProductControllerImpl();
 }
+exports.default = makeProductController;

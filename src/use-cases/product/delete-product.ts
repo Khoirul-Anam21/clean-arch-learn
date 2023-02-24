@@ -8,7 +8,7 @@ export interface DeleteProductUseCase{
 class DeleteProductsUseCaseImpl implements DeleteProductUseCase {
     productDb: ProductDataAccess;
     constructor(db: ProductDataAccess) {
-        
+        this.productDb = db
     }
     runUseCase(slug: string): Product { // params jika butuh
         return this.productDb.deleteOneBySlug(slug);

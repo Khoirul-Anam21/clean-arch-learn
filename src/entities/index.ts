@@ -1,7 +1,8 @@
-import { nanoid } from "nanoid";
 import { buildMakeProduct } from "./product";
+const short = require('short-uuid');
 
 
-const makeProduct = buildMakeProduct(nanoid(), new Date());
+
+const makeProduct = buildMakeProduct(short.generate(), new Date());
 
 export default makeProduct;
