@@ -1,1 +1,20 @@
-[{"productId":"dkofadfnadsfan-fdaf","name":"Indomie","description":"Indomie Seleraku","slug":"indomie","price":90000,"stock":90,"dateArrived":"2011-10-05T14:48:00.000Z"},{"productId":"dkofadfnadsfan-fdaf","name":"Bakso","description":"Indomie Seleraku","slug":"bakso","price":90000,"stock":90,"dateArrived":"2011-10-05T14:48:00.000Z"}]
+[
+    {
+        "productId": "vJ9MM9Y6jjRkJVJTsU9fxt",
+        "name": "Indomie Aceh",
+        "description": "HAHAHAHAHAH",
+        "price": 9000,
+        "stock": 9,
+        "slug": "indomieaceh",
+        "dateArrived": "2023-02-25T02:43:47.933Z"
+    },
+    {
+        "productId": "aCS6z1R5LYuerqih9DHkmh",
+        "name": "Sate",
+        "description": "Sate madura cuy",
+        "price": 9000,
+        "stock": 9,
+        "slug": "sate",
+        "dateArrived": "2023-02-25T02:41:28.963Z"
+    }
+]

@@ -2,7 +2,8 @@
 by: Mohammad Khoirul Anam
 
 ## Deskripsi Aplikasi
-RESTful API berbasis node.js Typescript
+CRUD RESTful API berbasis node.js Typescript
+Database menggunakan file json
 
 ## Menjalankan
 ```

@@ -16,10 +16,8 @@ class ProductControllerImpl implements ProductController {
     makePostProduct(useCase: AddProductUseCase): ControllerFunc {
         return function (httpReq: HTTPRequest): HTTPResponse {
             try {
-                const request = httpReq.body; //normal
-                const product = JSON.parse(request);
-                console.log(product);
-                const postProduct = useCase.runUseCase(product);
+                const body = httpReq.body; //normal
+                const postProduct = useCase.runUseCase(body);
                 return {
                     headers: {
                         'Content-Type': 'application/json',
@@ -72,10 +70,9 @@ class ProductControllerImpl implements ProductController {
     makeUpdateProduct(useCase: UpdateProductsUseCase): ControllerFunc {
         return function (httpReq: HTTPRequest): HTTPResponse {
             try {
-                const request = httpReq.body;
+                const body = httpReq.body;
                 const slug = httpReq.params.slug
-                const productReq = JSON.parse(request);
-                const updatedProduct = useCase.runUseCase(productReq, slug);
+                const updatedProduct = useCase.runUseCase(body, slug);
                 return {
                     headers: {
                         'Content-Type': 'application/json',
